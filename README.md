@@ -43,7 +43,7 @@ or
 
 `pytest --cov` - to see test coverage
 
-WARNING: reset db everything after you run tests.
+WARNING: reset db everytime after you run tests.
 
 # Test coverage report
 
