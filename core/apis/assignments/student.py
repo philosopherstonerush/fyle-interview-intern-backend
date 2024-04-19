@@ -21,9 +21,12 @@ def list_assignments(p):
 @decorators.accept_payload
 @decorators.authenticate_principal
 def upsert_assignment(p, incoming_payload):
-    """Create or Edit an assignment"""
+    """Create or Edit an assignment"""    
     assignment = AssignmentSchema().load(incoming_payload)
     assignment.student_id = p.student_id
+    
+    if assignment.content == None:
+        return "content cannot be null", 400
 
     upserted_assignment = Assignment.upsert(assignment)
     db.session.commit()
@@ -36,6 +39,7 @@ def upsert_assignment(p, incoming_payload):
 @decorators.authenticate_principal
 def submit_assignment(p, incoming_payload):
     """Submit an assignment"""
+    
     submit_assignment_payload = AssignmentSubmitSchema().load(incoming_payload)
 
     submitted_assignment = Assignment.submit(
